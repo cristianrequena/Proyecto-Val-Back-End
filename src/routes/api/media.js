@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const mediaController = require('../../controllers/media.controller');
+const router = require('express').Router();
 
-router.post('/', mediaController.createMedia);
-router.get('/', mediaController.getAllMedia);
-router.get('/:media_id', mediaController.getMediaById);
-router.put('/:media_id', mediaController.updateMedia);
-router.delete('/:media_id', mediaController.deleteMedia);
+const {createMedia, getAllMedia, getMediaById, updateMedia, deleteMedia} = require('../../controllers/media.controller');
+
+router.post('/', createMedia);
+router.get('/', getAllMedia);
+router.get('/:media_id', getMediaById);
+router.put('/:media_id', updateMedia);
+router.delete('/:media_id', deleteMedia);
 
 module.exports = router;

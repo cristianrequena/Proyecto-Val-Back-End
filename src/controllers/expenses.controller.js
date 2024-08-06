@@ -1,29 +1,65 @@
-const db = require("../config/db");
+const Expense = require('../models/expenses.model');
 
-const selectAll = () => {
-    return db.query("SELECT * FROM expenses");
+const getAllExpenses = async (req, res, next) => {
+    try {
+        const [expenses] = await Expense.selectAll();
+        res.json(expenses);
+    } catch (err) {
+        next(err);
+    }
 };
 
-const selectById = (id) => {
-    return db.query("SELECT * FROM expenses WHERE id = ?", [id]);
+const getExpenseById = async (req, res, next) => {
+    try {
+        const [expense] = await Expense.selectById(req.params.expense_id);
+        if (expense.length === 0) {
+            return res.status(404).json({ error: "Expense not found" });
+        }
+        res.json(expense[0]);
+    } catch (err) {
+        next(err);
+    }
 };
 
-const insert = (expenseData) => {
-    return db.query("INSERT INTO expenses SET ?", [expenseData]);
+const createExpense = async (req, res, next) => {
+    try {
+        const [newExpense] = await Expense.insert(req.body);
+        const [[expense]] = await Expense.selectById(newExpense.insertId);
+        res.json(expense);
+    } catch (err) {
+        next(err);
+    }
 };
 
-const updateById = (id, expenseData) => {
-    return db.query("UPDATE expenses SET ? WHERE id = ?", [expenseData, id]);
+const updateExpense = async (req, res, next) => {
+    try {
+        const { expense_id } = req.params;
+        await Expense.updateById(expense_id, req.body);
+        const [[expense]] = await Expense.selectById(expense_id);
+        res.json(expense);
+    } catch (err) {
+        next(err);
+    }
 };
 
-const deleteById = (id) => {
-    return db.query("DELETE FROM expenses WHERE id = ?", [id]);
+const deleteExpense = async (req, res, next) => {
+    try {
+        const { expense_id } = req.params;
+        const [result] = await Expense.deleteById(expense_id);
+        if (result.affectedRows === 1) {
+            res.json({ message: "Expense deleted" });
+        } else {
+            res.status(404).json({ message: "Expense not found" });
+        }
+    } catch (err) {
+        next(err);
+    }
 };
 
 module.exports = {
-    selectAll,
-    selectById,
-    insert,
-    updateById,
-    deleteById,
+    getAllExpenses,
+    getExpenseById,
+    createExpense,
+    updateExpense,
+    deleteExpense,
 };

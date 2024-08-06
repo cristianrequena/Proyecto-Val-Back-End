@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const routineController = require('../../controllers/routines.controller');
+const router = require('express').Router();
 
-router.post('/', routineController.createRoutine);
-router.get('/', routineController.getAllRoutines);
-router.get('/:routine_id', routineController.getRoutineById);
-router.put('/:routine_id', routineController.updateRoutine);
-router.delete('/:routine_id', routineController.deleteRoutine);
+const {createRoutine, getAllRoutines, getRoutineById, updateRoutine, deleteRoutine} = require('../../controllers/routines.controller');
+
+router.post('/', createRoutine);
+router.get('/', getAllRoutines);
+router.get('/:routine_id', getRoutineById);
+router.put('/:routine_id', updateRoutine);
+router.delete('/:routine_id', deleteRoutine);
 
 module.exports = router;

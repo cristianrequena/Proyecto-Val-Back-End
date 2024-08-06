@@ -1,11 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const familyMemberController = require('../../controllers/familyMembers.controller');
+const router = require('express').Router();
 
-router.post('/', familyMemberController.createFamilyMember);
-router.get('/', familyMemberController.getAllFamilyMembers);
-router.get('/:familyMember_id', familyMemberController.getFamilyMemberById);
-router.put('/:familyMember_id', familyMemberController.updateFamilyMember);
-router.delete('/:familyMember_id', familyMemberController.deleteFamilyMember);
+const {createFamilyMember, getAllFamilyMembers, getFamilyMemberById, updateFamilyMember, deleteFamilyMember} = require('../../controllers/familyMembers.controller');
+
+router.post('/', createFamilyMember);
+router.get('/', getAllFamilyMembers);
+router.get('/:familyMember_id', getFamilyMemberById);
+router.put('/:familyMember_id', updateFamilyMember);
+router.delete('/:familyMember_id', deleteFamilyMember);
 
 module.exports = router;
