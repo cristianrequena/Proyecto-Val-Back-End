@@ -1,23 +1,25 @@
 const db = require("../config/db");
 
 const selectAll = () => {
-    return db.query("SELECT * FROM familyMembers");
+    return db.query("SELECT * FROM familymembers");
 };
 
 const selectById = (id) => {
-    return db.query("SELECT * FROM familyMembers WHERE id = ?", [id]);
+    return db.query("SELECT * FROM familymembers WHERE member_id = ?", [id]);
 };
 
-const insert = (familyMemberData) => {
-    return db.query("INSERT INTO familyMembers SET ?", [familyMemberData]);
+const insert = (data) => {
+    return db.query("INSERT INTO familymembers (user_id, first_name, last_name, date_of_birth, relationship, is_primary, pet, profile_photo, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+    [data.user_id, data.first_name, data.last_name, data.date_of_birth, data.relationship, data.is_primary, data.pet, data.profile_photo, data.created_at]);
 };
 
-const updateById = (id, familyMemberData) => {
-    return db.query("UPDATE familyMembers SET ? WHERE id = ?", [familyMemberData, id]);
+const updateById = (id, data) => {
+    return db.query("UPDATE familymembers SET user_id = ?, first_name = ?, last_name = ?, date_of_birth = ?, relationship = ?, is_primary = ?, pet = ?, profile_photo = ?, created_at = ? WHERE member_id = ?", 
+    [data.user_id, data.first_name, data.last_name, data.date_of_birth, data.relationship, data.is_primary, data.pet, data.profile_photo, data.created_at, id]);
 };
 
 const deleteById = (id) => {
-    return db.query("DELETE FROM familyMembers WHERE id = ?", [id]);
+    return db.query("DELETE FROM familymembers WHERE member_id = ?", [id]);
 };
 
 module.exports = {

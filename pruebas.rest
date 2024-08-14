@@ -1,0 +1,40 @@
+@PORT = 3000
+
+@HOST = http://localhost:{{PORT}}
+
+
+GET {{HOST}}/api/users
+
+###
+
+POST {{HOST}}/api/users
+Content-Type: application/json
+
+{
+    "first_name": "Cristian",
+    "last_name": "Requena",
+    "email": "cristian91rp@gmail.com",
+    "password_hash": "12345",
+    "imagen": ""
+}
+
+###
+
+GET {{HOST}}/api/users/2
+
+###
+
+PUT  {{HOST}}/api/users/5
+Content-Type: application/json
+
+{
+    "first_name": "Cristian",
+    "last_name": "Requena",
+    "email": "cristian91rp@gmail.com",
+    "password_hash": "12345",
+    "imagen": ""
+}
+
+###
+
+DELETE  {{HOST}}/api/users/5

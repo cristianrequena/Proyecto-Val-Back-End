@@ -5,19 +5,21 @@ const selectAll = () => {
 };
 
 const selectById = (id) => {
-    return db.query("SELECT * FROM expenses WHERE id = ?", [id]);
+    return db.query("SELECT * FROM expenses WHERE expense_id = ?", [id]);
 };
 
-const insert = (expenseData) => {
-    return db.query("INSERT INTO expenses SET ?", [expenseData]);
+const insert = (data) => {
+    return db.query("INSERT INTO expenses (user_id, amount, expense_date, category, description) VALUES (?, ?, ?, ?, ?)", 
+    [data.user_id, data.amount, data.expense_date, data.category, data.description]);
 };
 
-const updateById = (id, expenseData) => {
-    return db.query("UPDATE expenses SET ? WHERE id = ?", [expenseData, id]);
+const updateById = (id, data) => {
+    return db.query("UPDATE expenses SET user_id = ?, amount = ?, expense_date = ?, category = ?, description = ? WHERE expense_id = ?", 
+    [data.user_id, data.amount, data.expense_date, data.category, data.description, id]);
 };
 
 const deleteById = (id) => {
-    return db.query("DELETE FROM expenses WHERE id = ?", [id]);
+    return db.query("DELETE FROM expenses WHERE expense_id = ?", [id]);
 };
 
 module.exports = {

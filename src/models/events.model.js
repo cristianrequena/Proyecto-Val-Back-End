@@ -5,19 +5,21 @@ const selectAll = () => {
 };
 
 const selectById = (id) => {
-    return db.query("SELECT * FROM events WHERE id = ?", [id]);
+    return db.query("SELECT * FROM events WHERE event_id = ?", [id]);
 };
 
-const insert = (eventData) => {
-    return db.query("INSERT INTO events SET ?", [eventData]);
+const insert = (data) => {
+    return db.query("INSERT INTO events (member_id, event_title, event_description, event_date, reminder, reminder_time) VALUES (?, ?, ?, ?, ?, ?)", 
+    [data.member_id, data.event_title, data.event_description, data.event_date, data.reminder, data.reminder_time]);
 };
 
-const updateById = (id, eventData) => {
-    return db.query("UPDATE events SET ? WHERE id = ?", [eventData, id]);
+const updateById = (id, data) => {
+    return db.query("UPDATE events SET member_id = ?, event_title = ?, event_description = ?, event_date = ?, reminder = ?, reminder_time = ? WHERE event_id = ?", 
+    [data.member_id, data.event_title, data.event_description, data.event_date, data.reminder, data.reminder_time, id]);
 };
 
 const deleteById = (id) => {
-    return db.query("DELETE FROM events WHERE id = ?", [id]);
+    return db.query("DELETE FROM events WHERE event_id = ?", [id]);
 };
 
 module.exports = {

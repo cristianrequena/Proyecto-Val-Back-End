@@ -5,19 +5,21 @@ const selectAll = () => {
 };
 
 const selectById = (id) => {
-    return db.query("SELECT * FROM routines WHERE id = ?", [id]);
+    return db.query("SELECT * FROM routines WHERE routine_id = ?", [id]);
 };
 
-const insert = (routineData) => {
-    return db.query("INSERT INTO routines SET ?", [routineData]);
+const insert = (data) => {
+    return db.query("INSERT INTO routines (member_id, routine_title, routine_description, start_time, end_time, days_of_week) VALUES (?, ?, ?, ?, ?, ?)", 
+    [data.member_id, data.routine_title, data.routine_description, data.start_time, data.end_time, data.days_of_week]);
 };
 
-const updateById = (id, routineData) => {
-    return db.query("UPDATE routines SET ? WHERE id = ?", [routineData, id]);
+const updateById = (id, data) => {
+    return db.query("UPDATE routines SET member_id = ?, routine_title = ?, routine_description = ?, start_time = ?, end_time = ?, days_of_week = ? WHERE routine_id = ?", 
+    [data.member_id, data.routine_title, data.routine_description, data.start_time, data.end_time, data.days_of_week, id]);
 };
 
 const deleteById = (id) => {
-    return db.query("DELETE FROM routines WHERE id = ?", [id]);
+    return db.query("DELETE FROM routines WHERE routine_id = ?", [id]);
 };
 
 module.exports = {
