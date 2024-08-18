@@ -23,10 +23,15 @@ const deleteById = (id) => {
     return db.query("DELETE FROM users WHERE user_id = ?", [id]);
 };
 
+const getByEmail = (email) => {
+    return db.query("SELECT * FROM users WHERE email = ?", [email]);
+}; 
+
 module.exports = {
     selectAll,
     selectById,
     insert,
     updateById,
     deleteById,
+    getByEmail,
 };

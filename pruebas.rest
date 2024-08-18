@@ -6,8 +6,7 @@
 GET {{HOST}}/api/users
 
 ###
-
-POST {{HOST}}/api/users
+POST {{HOST}}/api/users/register
 Content-Type: application/json
 
 {
@@ -19,7 +18,16 @@ Content-Type: application/json
 }
 
 ###
+POST {{HOST}}/api/users/login
+Content-Type: application/json
 
+{
+    "email": "cristian91rp@gmail.com",
+    "password_hash": "12345"
+}
+
+
+###
 GET {{HOST}}/api/users/2
 
 ###
@@ -37,4 +45,4 @@ Content-Type: application/json
 
 ###
 
-DELETE  {{HOST}}/api/users/5
+DELETE  {{HOST}}/api/users/1
