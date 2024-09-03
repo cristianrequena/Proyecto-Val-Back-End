@@ -1,5 +1,4 @@
-const db = require("../config/db");
-console.log(db)
+
 
 const selectAll = () => {
     return db.query("SELECT * FROM users");
@@ -25,7 +24,8 @@ const deleteById = (id) => {
 
 const getByEmail = (email) => {
     return db.query("SELECT * FROM users WHERE email = ?", [email]);
-}; 
+};
+
 
 module.exports = {
     selectAll,

@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 
 const User = require("../models/users.model");
+const { generateToken } = require("../helpers/utils");
 
 
 const registerUser = async (req, res, next) => {
@@ -19,10 +20,11 @@ const loginUser = async(req, res, next) => {
     const {email, password} = req.body;
     
     try {
-        const user =  (await User.getByEmail(email))[0];
-        if (!user) {
-          return res.status(404).json({ message: "Usuario no encontrado" });
+        const [users] =  await User.getByEmail(email);
+        if (users.length === 0) {
+          return res.status(401).json({ message: "Usuario no encontrado" });
         }
+        const user = users[0];
         console.log("Usuario encontrado:", user);
         const passwordIsValid = bcrypt.compareSync(password, user.password_hash);
         if (!passwordIsValid) {
@@ -34,7 +36,8 @@ const loginUser = async(req, res, next) => {
             .status(500)
             .json({ message: "Error interno, el ID del usuario no se encontró" });
         }
-        res.status(200).json({ token, user: user.user_id });
+        res.json({success: 'Login correcto', token: token})
+        /*res.status(200).json({ token, user: user.user_id });*/
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
@@ -47,6 +50,11 @@ const recoverUser = async(req, res, next) => {
         next(err);
     }
 }
+
+const getProfile = (req, res, next) => {
+    res.json(req.user);
+};
+  
 
 const getAllUsers = async (req, res, next) => {
     try {
@@ -98,6 +106,7 @@ module.exports = {
     registerUser,
     loginUser,
     recoverUser,
+    getProfile,
     getAllUsers,
     getUserById,
     updateUser,

@@ -1,16 +1,15 @@
 const jwt = require("jsonwebtoken");
+const dayjs = require("dayjs")
 
 const generateToken = (user) => {
   const payload = {
-    id: user.user_id,
-    email: user.email,
+    user_id: user.user_id,
+    exp: dayjs().add(30, 'day').unix()
   };
 
-  const secret = process.env.SECRET_KEY || "default_secret";
+  const secret = process.env.SECRET_KEY;
 
-  return jwt.sign(payload, secret, {
-    expiresIn: "24h",
-  });
+  return jwt.sign(payload, secret);
 };
 
 module.exports = {

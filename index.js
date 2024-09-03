@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 // Server creation and configuration
-const http = require('http');
+const http = require('node:http');
 const app = require('./src/app');
 
 //Config DB

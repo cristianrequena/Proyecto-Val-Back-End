@@ -2,11 +2,14 @@
 
 @HOST = http://localhost:{{PORT}}
 
+@TOKEN  = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMywiZXhwIjoxNzI3OTY0MjQyLCJpYXQiOjE3MjUzNzIyNDJ9.ma4rnP5QPDg2ehrzqe4BHft3tpSYwGAYTaiJwWGBNuo
 
 GET {{HOST}}/api/users
+Authorization: {{TOKEN}}
 
 ###
 POST {{HOST}}/api/users/register
+Authorization: API-KEY
 Content-Type: application/json
 
 {
@@ -19,20 +22,22 @@ Content-Type: application/json
 
 ###
 POST {{HOST}}/api/users/login
+Authorization: API-KEY
 Content-Type: application/json
 
 {
     "email": "cristian91rp@gmail.com",
-    "password_hash": "12345"
+    "password": "12345"
 }
 
 
 ###
-GET {{HOST}}/api/users/2
+GET {{HOST}}/api/users/10
+Authorization: API-KEY
 
 ###
-
 PUT  {{HOST}}/api/users/5
+Authorization: API-KEY
 Content-Type: application/json
 
 {
@@ -44,5 +49,9 @@ Content-Type: application/json
 }
 
 ###
+DELETE  {{HOST}}/api/users/11
+Authorization: {{TOKEN}}
 
-DELETE  {{HOST}}/api/users/1
+### Perfil
+GET {{HOST}}/api/users/perfil
+Authorization: {{TOKEN}}
